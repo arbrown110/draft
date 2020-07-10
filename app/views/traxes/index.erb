@@ -1,13 +1,27 @@
-<h1>What does your dating life look like??</h1>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewpoint" content="width=device-width, intial-scale=1.0">
+    <title>What does your dating life look like??</title>
+</head>
+<body>
+    <% if @user.traxes.empty? %>
+        <p><%= "There are no experiences to display!" %></p>
+       
+    <% else %>
+        <p style="text-align:center;">
+            <a href="/traxes/new">Create</a>
+        </p>
+        <ul>
+            <% @traxes.each do |traxes| %>
+            <h2><a href="/trax/<%= traxes.id %>/edit"><%= Trax.name.capitalize %></a></h3>
+                <li>Name: <%= Trax.name %></li>
+                <li>Number: <%= Trax.number %></li>
+                <li>Score: <%= Trax.score %></li>
+            <% end %>
+        </ul>  
 
-<p style="text-align:center;">
-    <a href="/traxes/new">Create</a> or
-    <a href="/sign_out">Logout</a>
-</p>
+    <% end %> 
 
-
-<br>
-<% @traxes.each do |traxes| %>
-    Name: <%= @traxes.name %>
-    Score: <%= @traxes.score %>
-<% end %>
+</body>
+</html>
