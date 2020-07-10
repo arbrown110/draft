@@ -1,7 +1,7 @@
 class TraxesController < ApplicationController
 
       #create
-  get '/traxes/new' do
+  get '/traxes' do
     if signed_in?
         @traxes = Traxes.all
         erb :'traxes/index'
@@ -9,7 +9,15 @@ class TraxesController < ApplicationController
         erb :'users/sign_in'
     end
   end
-    
+   
+  get '/traxes/new' do
+    if signed_in?
+      erb :'traxes/new'
+    else
+      redirect '/login'
+    end   
+  end
+  
   post '/traxes' do
     if params.values.any? {|value| value == ""}
       erb :'traxes/new'
@@ -50,7 +58,7 @@ class TraxesController < ApplicationController
     end
   end
         
-  end
+  
 
   patch '/trax/:id' do
     if params.value.any? {|value|value == ""}
@@ -58,27 +66,29 @@ class TraxesController < ApplicationController
     else   
       @traxes = Traxes.find(params[:id])
       @traxes = Traxes.update(
-          name: params[:name], date: params[:date], 
-          score: params[:score], location: params[:location], 
-          number: params[:number], interest: params[:interest]
+        name: params[:name], date: params[:date], 
+        score: params[:score], location: params[:location], 
+        number: params[:number], interest: params[:interest]
       )
       @traxes.save
       redirect to "/traxes/#{@traxes.id}"
     end 
   end
     #delete
-  delete '/traxes/:id/delete' do
-    @traxes = Traxes.find(params [:id])  
-    if session[:user_id]
-       @traxes = Traxes.find(params[:id])
-      if @traxes.user_id == session[:user_id]
-        @traxes.delete
-        redirect to '/traxes'
-      else
-        redirect to '/traxes'
+ delete '/traxes/:id/delete' do
+    #@traxes = Traxes.find(params [:id])  
+    #if session[:user_id]
+    if sign_in?
+      @traxes = Traxes.find(params[:id])
+      if @traxes.user_id == current_user.id
+        @traxes.destroy
+        #redirect to '/traxes'
+      #else
+        #redirect to '/traxes'
       end
+        erb: 'users/show'
     else
-      redirect to '/sign_in'
+      redirect to '/'
     end
   end
 
