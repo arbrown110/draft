@@ -2,12 +2,12 @@ class TraxesController < ApplicationController
 
   # GET: /traxes
   get "/traxes" do
-    erb :"/traxes/index.html"
+    erb :"/traxes/index"
   end
 
   # GET: /traxes/new
   get "/traxes/new" do
-    erb :"/traxes/new.html"
+    erb :"/traxes/new"
   end
 
   # POST: /traxes
@@ -17,12 +17,12 @@ class TraxesController < ApplicationController
 
   # GET: /traxes/5
   get "/traxes/:id" do
-    erb :"/traxes/show.html"
+    erb :"/traxes/show"
   end
 
   # GET: /traxes/5/edit
   get "/traxes/:id/edit" do
-    erb :"/traxes/edit.html"
+    erb :"/traxes/edit"
   end
 
   # PATCH: /traxes/5
