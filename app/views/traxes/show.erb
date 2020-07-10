@@ -1,1 +1,19 @@
 <h1>This is the show page for an individual instance of your model.</h1>
+
+<h1> Your Recent Experience </h1>
+
+Name :<% @traxes.name %><br>
+Date :<% @traxes.date %><br>
+Score:<% @traxes.score %><br>
+Where you went :<% @traxes.location %><br>
+Number :<%= @traxes.number %><br>
+Will you go on another date ? :<%= @traxes.interest %><br>
+
+
+
+<form method="post" action="/traxes/<%= @traxes.user_id %>">
+  <input id="hidden" type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="delete">
+
+</form>
+

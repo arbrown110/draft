@@ -1,8 +1,13 @@
-<h1>This is the Model's index page.</h1>
-
 <h1>What does your dating life look like??</h1>
+
+<p style="text-align:center;">
+    <a href="/traxes/new">Create</a> or
+    <a href="/sign_out">Logout</a>
+</p>
+
+
 <br>
 <% @traxes.each do |traxes| %>
     Name: <%= @traxes.name %>
     Score: <%= @traxes.score %>
-<% end %>s
+<% end %>

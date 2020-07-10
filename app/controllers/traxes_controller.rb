@@ -3,8 +3,8 @@ class TraxesController < ApplicationController
       #create
   get '/traxes' do
     if signed_in?
-      @traxes = Traxes.all
-      erb :'traxes/index'
+      @traxes = Trax.all
+      erb :'/traxes/index'
     else
       redirect to '/sign_in'
     end
@@ -23,15 +23,15 @@ class TraxesController < ApplicationController
      # erb :'traxes/new'
     if signed_in?  
     #else
-      user = User.find(session[:user_id])
-      @traxes = Traxes.create(
+      @user = User.find(session[:user_id])
+      @traxes = Trax.create(
         name: params[:name], date: params[:date], 
         score: params[:score], location: params[:location], 
         number: params[:number], interest: params[:interest]
       )
       @traxes.user_id = current_user.id
       @traxes.save
-      redirect to "/traxes/#{@traxes.id}"
+      redirect to "/traxes/show"
     else  
       redirect '/sign_in'
     end
@@ -40,7 +40,7 @@ class TraxesController < ApplicationController
     #review
   get '/traxes/:id' do
      if signed_in?
-      @traxes = Traxes.find_by_id(params[:users_id]) 
+      @traxes = Trax.find_by_id(params[:users_id]) 
       erb :'/traxes/show'
     else
         erb :'users/sign_in' 
