@@ -3,10 +3,10 @@ class TraxesController < ApplicationController
       #create
   get '/traxes' do
     if signed_in?
-        @traxes = Traxes.all
-        erb :'traxes/index'
+      @traxes = Traxes.all
+      erb :'traxes/index'
     else
-        erb :'users/sign_in'
+      redirect to '/sign_in'
     end
   end
    
@@ -14,28 +14,33 @@ class TraxesController < ApplicationController
     if signed_in?
       erb :'traxes/new'
     else
-      redirect '/login'
+      redirect to '/sign_in'
     end   
   end
-  
+
   post '/traxes' do
-    if params.values.any? {|value| value == ""}
-      erb :'traxes/new'
-    else
+    #if params.values.any? {|value| value == ""}
+     # erb :'traxes/new'
+    if signed_in?  
+    #else
       user = User.find(session[:user_id])
       @traxes = Traxes.create(
         name: params[:name], date: params[:date], 
         score: params[:score], location: params[:location], 
         number: params[:number], interest: params[:interest]
       )
+      @traxes.user_id = current_user.id
+      @traxes.save
       redirect to "/traxes/#{@traxes.id}"
+    else  
+      redirect '/sign_in'
     end
   end
 
     #review
   get '/traxes/:id' do
      if signed_in?
-      @traxes = Traxes.find(params[:users_id]) 
+      @traxes = Traxes.find_by_id(params[:users_id]) 
       erb :'/traxes/show'
     else
         erb :'users/sign_in' 
@@ -46,24 +51,24 @@ class TraxesController < ApplicationController
     
     #edit
   get '/traxes/:id/edit' do
-    if logged_in?
+    if signed_in?
       @traxes = Traxes.find(params[:id])
-      if @traxes.user_id == session[:user_id]
+      if @traxes.user_id == current_user.id
         erb :'/traxes/edit'
       else
-      erb :'traxes'
+      redirect '/sign_in'
       end
     else
-      erb :'users/sign_in'
+      redirect '/'
     end
   end
         
   
 
-  patch '/trax/:id' do
-    if params.value.any? {|value|value == ""}
-      redirect to "/traxes/#{@traxes.id}/edit" 
-    else   
+  patch '/traxes/:id' do
+    #if params.value.any? {|value|value == ""}
+     # redirect to "/traxes/#{@traxes.id}/edit" 
+    #else   
       @traxes = Traxes.find(params[:id])
       @traxes = Traxes.update(
         name: params[:name], date: params[:date], 
@@ -72,13 +77,13 @@ class TraxesController < ApplicationController
       )
       @traxes.save
       redirect to "/traxes/#{@traxes.id}"
-    end 
+    #end 
   end
     #delete
  delete '/traxes/:id/delete' do
     #@traxes = Traxes.find(params [:id])  
     #if session[:user_id]
-    if sign_in?
+    if signed_in?
       @traxes = Traxes.find(params[:id])
       if @traxes.user_id == current_user.id
         @traxes.destroy
@@ -86,7 +91,7 @@ class TraxesController < ApplicationController
       #else
         #redirect to '/traxes'
       end
-        erb: 'users/show'
+        erb :'users/show'
     else
       redirect to '/'
     end

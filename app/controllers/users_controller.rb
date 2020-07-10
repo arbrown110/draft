@@ -21,25 +21,26 @@ class UsersController < ApplicationController
 
   get '/sign_in' do
     if signed_in?
-   # @user= User.find(session[:users_id])
+    #@user= User.find(session[:users_id])
     erb :'users/show'
     else
      erb :'users/sign_in'     
     end
   end
 
-  post 'users/sign_in' do
-      @user = User.find_by(:username => parama[:username])
-      if @user && @user= User.find_by(username params[:username])
-          session[users_id] = @user.id
+  post '/sign_in' do
+      @user = User.find_by(:username => params[:username])
+     
+      if @user && @user= User.find_by(username: params[:username])
+          session[:id] = @user.id
           redirect to '/traxes'
       else
           redirect '/sign_in '  
       end      
   end 
 
-  get '/users/logout' do
-    if sign_in?
+  get '/users/sign_out' do
+    if signed_in?
       session.destroy
       redirect '/sign_in'
     else 

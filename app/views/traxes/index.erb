@@ -1,1 +1,8 @@
 <h1>This is the Model's index page.</h1>
+
+<h1>What does your dating life look like??</h1>
+<br>
+<% @traxes.each do |traxes| %>
+    Name: <%= @traxes.name %>
+    Score: <%= @traxes.score %>
+<% end %>s
