@@ -1,6 +1,7 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewpoint" content="width=device-width, intial-scale=1.0">
     <title>What does your dating life look like??</title>
 </head>
@@ -13,7 +14,7 @@
             <a href="/traxes/new">Create</a>
         </p>
         <ul>
-            <% @traxes.each do |traxes| %>
+            <% @user.traxes.each do |traxes| %>
             <h2><a href="/trax/<%= traxes.id %>/edit"><%= Trax.name.capitalize %></a></h3>
                 <li>Name: <%= Trax.name %></li>
                 <li>Number: <%= Trax.number %></li>
