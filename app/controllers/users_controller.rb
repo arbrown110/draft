@@ -1,37 +1,49 @@
 class UsersController < ApplicationController
 
-  # GET: /users
-  get "/users" do
-    erb :"/users/index"
+  get '/users/register' do
+    if !signed_in?
+      erb :'/users/register'
+    else
+      redirect to '/traxes' 
+    end   
   end
 
-  # GET: /users/new
-  get "/users/new" do
-    erb :"/users/new"
+  post '/users/register' do
+    if params.values.any? {|value| value == ""}
+    erb :'/users/register' 
+    else
+      @user = User.new( username: params[:username], email: params[:email],  password: params[:password])
+      @user.save
+      session[:user_id] = @user.id
+      redirect to '/traxes'
+    end    
+  end 
+
+  get '/users/sign_in' do
+    if !signed_in?
+   # @user= User.find(session[:users_id])
+    erb :'/users/sign_in'
+    else
+     redirect to '/traxes'     
+    end
   end
 
-  # POST: /users
-  post "/users" do
-    redirect "/users"
-  end
+  post '/users/sign_in' do
+      @user = User.find_by(:username => parama[:username])
+      if @user && @user= User.find_by(username params[:username])
+          session[users_id] = @user.id
+          redirect to '/traxes'
+      else
+          redirect "users/sign_in"   
+      end      
+  end 
 
-  # GET: /users/5
-  get "/users/:id" do
-    erb :"/users/show"
+  get '/users/logout' do
+    if session[:user_id] != nil
+      session.destroy
+      redirect '/'
+    else 
+      redirect to '/traxes'
+    end
   end
-
-  # GET: /users/5/edit
-  get "/users/:id/edit" do
-    erb :"/users/edit"
-  end
-
-  # PATCH: /users/5
-  patch "/users/:id" do
-    redirect "/users/:id"
-  end
-
-  # DELETE: /users/5/delete
-  delete "/users/:id/delete" do
-    redirect "/users"
-  end
-end
+end  
