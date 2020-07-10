@@ -1,16 +1,16 @@
 class UsersController < ApplicationController
 
-  get '/users/register' do
+  get '/register' do
     if !signed_in?
-      erb :'/users/register'
+      erb :'/register'
     else
       redirect to '/traxes' 
     end   
   end
 
-  post '/users/register' do
+  post '/register' do
     if params.values.any? {|value| value == ""}
-    erb :'/users/register' 
+    erb :'/register' 
     else
       @user = User.new( username: params[:username], email: params[:email],  password: params[:password])
       @user.save
@@ -19,22 +19,22 @@ class UsersController < ApplicationController
     end    
   end 
 
-  get '/users/sign_in' do
+  get '/sign_in' do
     if !signed_in?
    # @user= User.find(session[:users_id])
-    erb :'/users/sign_in'
+    erb :'/sign_in'
     else
      redirect to '/traxes'     
     end
   end
 
-  post '/users/sign_in' do
+  post '/sign_in' do
       @user = User.find_by(:username => parama[:username])
       if @user && @user= User.find_by(username params[:username])
           session[users_id] = @user.id
           redirect to '/traxes'
       else
-          redirect "users/sign_in"   
+          redirect '/sign_in '  
       end      
   end 
 
