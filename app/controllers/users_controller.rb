@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   get '/register' do
     if signed_in?
-      redirect to'/traxes'
+      erb :'/traxes/index'
     else
       erb :'users/register' 
     end   
@@ -16,7 +16,7 @@ class UsersController < ApplicationController
       @user = User.new( username: params[:username], email: params[:email],  password: params[:password])
       @user.save
       session[:user_id] = @user.id
-      redirect to '/traxes'
+      redirect to '/traxes/index'
     end    
   end 
 

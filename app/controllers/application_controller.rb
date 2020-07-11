@@ -1,19 +1,29 @@
 require './config/environment'
 
 class ApplicationController < Sinatra::Base
-
+  
+  register Sinatra::ActiveRecordExtension
+  set :views, Proc.new{ File.join(root, "../views/") }
+  
   configure do
-    set :public_folder, 'public'
-    set :views, 'app/views'
     enable :sessions
     set :session_secret, 'lovetrack'
   end
 
   get "/" do
-    erb :welcome
+    erb :welcome 
   end
 
   helpers do
+
+    def render_navbar
+      if signed_in?
+        erb :sign_in_navbar
+      else  
+        erb :welcome
+      end   
+    end
+
     def signed_in?
       !!current_user
     end
