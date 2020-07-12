@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   get '/register' do
     if signed_in?
-      erb :'/traxes/index'
+      erb :'/traxes'
     else
       erb :'users/register' 
     end   
@@ -31,11 +31,9 @@ class UsersController < ApplicationController
 
   post '/sign_in' do
       @user = User.find_by(:username => params[:username])
-    
-
       if @user && @user= User.find_by(username: params[:username])
           session[:id] = @user.id
-          redirect to '/traxes'
+          redirect "/users/#{@user.id}"
       else
           redirect '/sign_in '  
       end      

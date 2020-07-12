@@ -1,17 +1,17 @@
-<h1>This is the show page for an individual instance of your model.</h1>
+Showing a post
 
 <h1> Your Recent Experience </h1>
 
-Name: <% Trax.name %><br>
-Date: <% Trax.date %><br>
-Score: <% Trax.score %><br>
-Where did you go?: <% Trax.location %><br>
-Number: <%= Trax.number %><br>
-Will you go on another date ?: <%= Trax.interest %><br>
+Name: <%= @trax.name %><br>
+Date: <%= @trax.date %><br>
+Score: <%= @trax.score %><br>
+Where did you go?: <%= @trax.location %><br>
+Number: <%= @trax.number %><br>
+Will you go on another date ?: <%= @trax.interest %><br>
 
 
 
-<form method="post" action="/traxes/<%= Trax.user_id %>">
+<form method="post" action="/traxes/<%= @trax.user_id %>" > 
   <input id="hidden" type="hidden" name="_method" value="DELETE">
   <input type="submit" value="delete">
 
